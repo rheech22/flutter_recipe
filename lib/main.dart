@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter_recipe/core/presentation/components/tablist.dart';
 
 import 'core/presentation/components/input_field.dart';
 import 'core/presentation/components/button.dart';
@@ -48,6 +49,35 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Tablist(
+              labels: ['without', 'optionals'],
+              onPressed: (index) {
+                print('Tab Changed to $index');
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Tablist(
+              labels: ['more', 'spacing', 'triple'],
+              onPressed: (index) {
+                print('Tab Changed to $index');
+              },
+              spacing: 30,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Tablist(
+              labels: ['more', 'height', 'and', 'four'],
+              onPressed: (index) {
+                print('Tab Changed to $index');
+              },
+              height: 100,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: const Badge('Text'),
