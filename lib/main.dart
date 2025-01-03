@@ -1,7 +1,10 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_recipe/ui/text_styles.dart';
+import 'package:flutter/material.dart' hide Badge;
+
+import 'core/presentation/components/input_field.dart';
 import 'core/presentation/components/button.dart';
+import 'core/presentation/components/badge.dart';
+import 'ui/text_styles.dart';
 
 void main() {
   runApp(
@@ -47,6 +50,29 @@ class HomePage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
+            child: const Badge('Text'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Badge(
+              'Text',
+              isSelected: true,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Badge('3', variant: BadgeVariants.rating),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Badge(
+              '5',
+              variant: BadgeVariants.rating,
+              isSelected: true,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Button(
               'Big Button',
               onPressed: () {
@@ -72,6 +98,13 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 print('Small Button Pressed');
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InputField(
+              label: 'Label',
+              placeHolder: 'Place Holder',
             ),
           ),
         ],

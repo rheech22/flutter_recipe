@@ -43,7 +43,7 @@ class _ButtonState extends State<Button> {
         });
         widget.onPressed();
       },
-      // ? 화면 밖으로 나가는 경우
+      // NOTE: 화면 밖으로 나가는 경우
       onTapCancel: () {
         setState(() {
           isPressed = false;
@@ -60,15 +60,15 @@ class _ButtonState extends State<Button> {
                 child: Text(
                   widget.text,
                   style: TextStyles.smallerTextBold.copyWith(
-                      color: Colors
-                          .white // ! copyWith는 런타임에 호출되어 성능에 영향을 미칠 수 있다고 함
-                      ),
+                    color: Colors
+                        .white, // NOTE: copyWith는 런타임에 호출되어 성능에 영향을 미칠 수 있다고 함
+                  ),
                 ),
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // ! Container보다 SizedBox가 성능 면에서 더 좋다고 함
+                  // NOTE: Container보다 SizedBox가 성능 면에서 더 좋다고 함
                   SizedBox(
                     width: 114,
                     child: Text(
