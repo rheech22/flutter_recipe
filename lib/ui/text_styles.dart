@@ -84,4 +84,10 @@ abstract class TextStyles {
     fontWeight: FontWeight.normal,
     fontFamily: 'Poppins',
   );
+
+  static const TextStyle smallerTextLabel = TextStyle(
+    fontSize: 8,
+    fontWeight: FontWeight.normal,
+    fontFamily: 'Poppins',
+  );
 }

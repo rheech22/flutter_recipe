@@ -2,13 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe/ui/color_styles.dart';
 import 'package:flutter_recipe/ui/text_styles.dart';
 
-enum ButtonVariants { big, medium, small }
+enum ButtonVariants { large, medium, small, rating }
+
+enum ButtonColors { primary, rating }
+
+class ButtonProperties {
+  final double height;
+  final Color color;
+  final TextStyle font;
+  final double borderRadius;
+  final bool showArrow;
+
+  const ButtonProperties({
+    required this.height,
+    required this.color,
+    required this.font,
+    required this.borderRadius,
+    required this.showArrow,
+  });
+}
 
 class Button extends StatefulWidget {
-  static const Map<ButtonVariants, double> heightMap = {
-    ButtonVariants.big: 60,
-    ButtonVariants.medium: 54,
-    ButtonVariants.small: 37,
+  static const Map<ButtonVariants, ButtonProperties> variantMap = {
+    ButtonVariants.large: ButtonProperties(
+      height: 60,
+      color: ColorStyles.primary100,
+      font: TextStyles.normalTextBold,
+      borderRadius: 10,
+      showArrow: true,
+    ),
+    ButtonVariants.medium: ButtonProperties(
+      height: 54,
+      color: ColorStyles.primary100,
+      font: TextStyles.normalTextBold,
+      borderRadius: 10,
+      showArrow: true,
+    ),
+    ButtonVariants.small: ButtonProperties(
+      height: 37,
+      color: ColorStyles.primary100,
+      font: TextStyles.smallerTextBold,
+      borderRadius: 10,
+      showArrow: false,
+    ),
+    ButtonVariants.rating: ButtonProperties(
+      height: 20,
+      color: ColorStyles.rating,
+      font: TextStyles.smallerTextLabel,
+      borderRadius: 6,
+      showArrow: false,
+    ),
   };
 
   final String text;
@@ -31,6 +74,8 @@ class _ButtonState extends State<Button> {
 
   @override
   Widget build(BuildContext context) {
+    final properties = Button.variantMap[widget.variant]!;
+
     return GestureDetector(
       onTapDown: (_) {
         setState(() {
@@ -50,22 +95,13 @@ class _ButtonState extends State<Button> {
         });
       },
       child: Container(
-        height: Button.heightMap[widget.variant],
+        height: properties.height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: isPressed ? ColorStyles.gray4 : ColorStyles.primary100,
+          borderRadius: BorderRadius.circular(properties.borderRadius),
+          color: isPressed ? ColorStyles.gray4 : properties.color,
         ),
-        child: widget.variant == ButtonVariants.small
-            ? Center(
-                child: Text(
-                  widget.text,
-                  style: TextStyles.smallerTextBold.copyWith(
-                    color: Colors
-                        .white, // NOTE: copyWith는 런타임에 호출되어 성능에 영향을 미칠 수 있다고 함
-                  ),
-                ),
-              )
-            : Row(
+        child: properties.showArrow
+            ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // NOTE: Container보다 SizedBox가 성능 면에서 더 좋다고 함
@@ -73,12 +109,11 @@ class _ButtonState extends State<Button> {
                     width: 114,
                     child: Text(
                       widget.text,
-                      style: TextStyles.normalTextBold
-                          .copyWith(color: Colors.white),
+                      style: properties.font.copyWith(color: Colors.white),
                     ),
                   ),
                   SizedBox(
-                    width: widget.variant == ButtonVariants.big ? 11 : 9,
+                    width: widget.variant == ButtonVariants.large ? 11 : 9,
                   ),
                   const Icon(
                     Icons.arrow_forward,
@@ -86,6 +121,15 @@ class _ButtonState extends State<Button> {
                     color: Colors.white,
                   ),
                 ],
+              )
+            : Center(
+                child: Text(
+                  widget.text,
+                  style: properties.font.copyWith(
+                    color: Colors
+                        .white, // NOTE: copyWith는 런타임에 호출되어 성능에 영향을 미칠 수 있다고 함
+                  ),
+                ),
               ),
       ),
     );

@@ -80,35 +80,31 @@ class HomePage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: const Badge('Text'),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const Badge(
-              'Text',
-              isSelected: true,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const Badge('3', variant: BadgeVariants.rating),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const Badge(
-              '5',
-              variant: BadgeVariants.rating,
-              isSelected: true,
+            child: Row(
+              spacing: 10,
+              children: [
+                const Badge('Text'),
+                const Badge(
+                  'Text',
+                  isSelected: true,
+                ),
+                const Badge('3', variant: BadgeVariants.rating),
+                const Badge(
+                  '5',
+                  variant: BadgeVariants.rating,
+                  isSelected: true,
+                ),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Button(
-              'Big Button',
+              'Big',
               onPressed: () {
                 print('Big Button Pressed');
               },
-              variant: ButtonVariants.big,
+              variant: ButtonVariants.large,
             ),
           ),
           Padding(
@@ -128,6 +124,16 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 print('Small Button Pressed');
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Button(
+              'Rating',
+              onPressed: () {
+                print('Rating Button Pressed');
+              },
+              variant: ButtonVariants.rating,
             ),
           ),
           Padding(
