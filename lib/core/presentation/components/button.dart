@@ -74,6 +74,7 @@ class _ButtonState extends State<Button> {
 
   @override
   Widget build(BuildContext context) {
+    // NOTE: https://dart.dev/null-safety/understanding-null-safety#the-map-index-operator-is-nullable
     final properties = Button.variantMap[widget.variant]!;
 
     return GestureDetector(

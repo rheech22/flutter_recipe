@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter_recipe/core/presentation/components/rating_dialog.dart';
 import 'package:flutter_recipe/core/presentation/components/tablist.dart';
 
 import 'core/presentation/components/input_field.dart';
@@ -49,6 +50,28 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return RatingDialog(
+                      initialRating: 3,
+                      onSendPressed: (rating) {
+                        Navigator.pop(
+                          context,
+                          true,
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+              child: Text('Show Rating'),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Tablist(
