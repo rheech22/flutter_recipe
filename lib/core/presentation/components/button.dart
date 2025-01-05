@@ -74,7 +74,7 @@ class _ButtonState extends State<Button> {
 
   @override
   Widget build(BuildContext context) {
-    // NOTE: https://dart.dev/null-safety/understanding-null-safety#the-map-index-operator-is-nullable
+    // https://dart.dev/null-safety/understanding-null-safety#the-map-index-operator-is-nullable
     final properties = Button.variantMap[widget.variant]!;
 
     return GestureDetector(
@@ -106,15 +106,12 @@ class _ButtonState extends State<Button> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // NOTE: Container보다 SizedBox가 성능 면에서 더 좋다고 함
-                  SizedBox(
-                    width: 114,
-                    child: Text(
-                      widget.text,
-                      style: properties.font.copyWith(color: Colors.white),
-                    ),
+                  Text(
+                    widget.text,
+                    style: properties.font.copyWith(color: Colors.white),
                   ),
                   SizedBox(
-                    width: widget.variant == ButtonVariants.large ? 11 : 9,
+                    width: widget.variant == ButtonVariants.large ? 40 : 38,
                   ),
                   const Icon(
                     Icons.arrow_forward,

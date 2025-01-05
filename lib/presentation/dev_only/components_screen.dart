@@ -93,7 +93,7 @@ class CompoentsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Button(
-              'Big',
+              'Sign In',
               onPressed: () {
                 print('Big Button Pressed');
               },
