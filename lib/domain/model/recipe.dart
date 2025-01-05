@@ -24,16 +24,15 @@ class Recipe {
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
-      id: json['id'],
-      name: json['name'],
-      category: json['category'],
-      image: json['image'],
-      chef: json['chef'],
-      time: json['time'],
-      rating: json['rating'],
-      ingredients: json['ingredients']
-          .map((ingredient) => RecipeIngredient.fromJson(ingredient))
-          .toList(),
+      category: json['category'] as String,
+      id: json['id'] as int,
+      name: json['name'] as String,
+      image: json['image'] as String,
+      chef: json['chef'] as String,
+      time: json['time'] as String,
+      rating: json['rating'].toDouble(),
+      ingredients:
+          json['ingredients'].map((e) => RecipeIngredient.fromJson(e)).toList(),
     );
   }
 

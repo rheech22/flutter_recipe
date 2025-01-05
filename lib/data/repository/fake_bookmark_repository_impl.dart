@@ -4,13 +4,13 @@ class FakeBookmarkRepositoryImpl implements BookmarkRepository {
   final _ids = <int>{2, 4};
 
   @override
-  Future<void> clear() async {
-    return _ids.clear();
+  Future<List<int>> getBookmarkedIds() async {
+    return _ids.toList();
   }
 
   @override
-  Future<List<int>> getBookmarkedIds() async {
-    return _ids.toList();
+  Future<void> clear() async {
+    _ids.clear();
   }
 
   @override
@@ -19,16 +19,16 @@ class FakeBookmarkRepositoryImpl implements BookmarkRepository {
   }
 
   @override
-  Future<void> toggle(int id) async {
-    if (_ids.contains(id)) {
-      _ids.remove(id);
-    } else {
-      _ids.add(id);
-    }
+  Future<void> unsave(int id) async {
+    _ids.remove(id);
   }
 
   @override
-  Future<void> unsave(int id) async {
-    _ids.remove(id);
+  Future<void> toggle(int id) async {
+    if (_ids.contains(id)) {
+      await unsave(id);
+    } else {
+      await save(id);
+    }
   }
 }

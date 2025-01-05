@@ -314,6 +314,8 @@ class FakeRecipeRepositoryImpl implements RecipeRepository {
 
   @override
   Future<List<Recipe>> getRecipes() async {
+    await Future.delayed(const Duration(microseconds: 500));
+
     final recipes = _mockData["recipes"]!;
     return recipes.map((r) => Recipe.fromJson(r)).toList();
   }

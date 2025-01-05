@@ -1,6 +1,11 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter_recipe/data/repository/fake_bookmark_repository_impl.dart';
+import 'package:flutter_recipe/data/repository/fake_recipe_repository_impl.dart';
+import 'package:flutter_recipe/domain/model/recipe.dart';
+import 'package:flutter_recipe/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe/presentation/dev_only/components_screen.dart';
+import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_screen.dart';
 import 'package:flutter_recipe/presentation/signin/signin_screen.dart';
 
 import 'core/presentation/components/button.dart';
@@ -26,11 +31,27 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Recipe',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: const ColorScheme.light(),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
       // home: const HomeScreen(),
-      home: const SigninScreen(),
+      home: FutureBuilder<List<Recipe>>(
+        future: GetSavedRecipesUseCase(
+          recipeRepository: FakeRecipeRepositoryImpl(),
+          bookmarkRepository: FakeBookmarkRepositoryImpl(),
+        ).execute(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          print('snapshot.data: ${snapshot.data}');
+          final recipes = snapshot.data ?? [];
+
+          return SavedRecipesScreen(recipes: recipes);
+        },
+      ),
     );
   }
 }
