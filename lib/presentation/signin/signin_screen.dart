@@ -7,7 +7,14 @@ import 'package:flutter_recipe/ui/color_styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SigninScreen extends StatelessWidget {
-  const SigninScreen({super.key});
+  final VoidCallback onTapSignIn;
+  final VoidCallback onTabSignUp;
+
+  const SigninScreen({
+    super.key,
+    required this.onTapSignIn,
+    required this.onTabSignUp,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,7 @@ class SigninScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               const InputField(
-                label: 'Enter Password',
+                label: 'Password',
                 placeHolder: 'Enter Password',
               ),
               const SizedBox(height: 20),
@@ -45,9 +52,7 @@ class SigninScreen extends StatelessWidget {
               Button(
                 'Sign In',
                 variant: ButtonVariants.large,
-                onPressed: () {
-                  print('Sign In');
-                },
+                onPressed: onTapSignIn,
               ),
               const SizedBox(height: 20),
               Row(
@@ -103,10 +108,13 @@ class SigninScreen extends StatelessWidget {
                       color: ColorStyles.black,
                     ),
                   ),
-                  Text(
-                    'Sign up',
-                    style: TextStyles.smallerTextBold.copyWith(
-                      color: ColorStyles.secondary100,
+                  GestureDetector(
+                    onTap: onTabSignUp,
+                    child: Text(
+                      'Sign up',
+                      style: TextStyles.smallerTextBold.copyWith(
+                        color: ColorStyles.secondary100,
+                      ),
                     ),
                   ),
                 ],
