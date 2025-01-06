@@ -84,15 +84,11 @@ class SigninScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedIconButton(
-                    onPressed: () {
-                      print('Google Sign In');
-                    },
+                    onPressed: () {},
                     icon: SvgPicture.asset('icons/google_icon.svg'),
                   ),
                   ElevatedIconButton(
-                    onPressed: () {
-                      print('Facebook Sign In');
-                    },
+                    onPressed: () {},
                     icon: SvgPicture.asset('icons/facebook_icon.svg'),
                   ),
                 ],

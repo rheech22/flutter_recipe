@@ -3,7 +3,7 @@ import 'package:flutter_recipe/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe/logger.dart';
 
-var logger = Logger();
+final logger = Logger();
 
 class GetSavedRecipesUseCase {
   final RecipeRepository _recipeRepository;

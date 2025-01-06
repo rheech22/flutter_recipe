@@ -25,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        // NOTE: make the content scrollable
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
@@ -67,6 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   children: [
                     Checkbox(
+                      // NOTE: checkbox with activeColor...
                       value: _isChecked,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -125,15 +127,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedIconButton(
-                      onPressed: () {
-                        print('Google Sign In');
-                      },
+                      onPressed: () {},
                       icon: SvgPicture.asset('icons/google_icon.svg'),
                     ),
                     ElevatedIconButton(
-                      onPressed: () {
-                        print('Facebook Sign In');
-                      },
+                      onPressed: () {},
                       icon: SvgPicture.asset('icons/facebook_icon.svg'),
                     ),
                   ],

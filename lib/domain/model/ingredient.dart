@@ -1,6 +1,6 @@
 import 'package:flutter_recipe/logger.dart';
 
-var logger = Logger();
+final logger = Logger();
 
 class Ingredient {
   final int id;

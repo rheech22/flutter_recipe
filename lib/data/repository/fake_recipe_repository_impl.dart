@@ -2,7 +2,7 @@ import 'package:flutter_recipe/domain/model/recipe.dart';
 import 'package:flutter_recipe/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe/logger.dart';
 
-var logger = Logger();
+final logger = Logger();
 
 class FakeRecipeRepositoryImpl implements RecipeRepository {
   final _mockData = {
@@ -328,7 +328,7 @@ class FakeRecipeRepositoryImpl implements RecipeRepository {
   @override
   Future<List<Recipe>> getRecipes() async {
     try {
-      await Future.delayed(const Duration(microseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 300));
 
       final recipes = _mockData["recipes"]!;
 

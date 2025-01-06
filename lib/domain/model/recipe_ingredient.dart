@@ -1,7 +1,7 @@
 import 'package:flutter_recipe/domain/model/ingredient.dart';
 import 'package:flutter_recipe/logger.dart';
 
-var logger = Logger();
+final logger = Logger();
 
 class RecipeIngredient {
   final Ingredient ingredient;

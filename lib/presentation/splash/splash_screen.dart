@@ -15,6 +15,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          // NOTE: cover image
           Image.asset(
             'images/splash_image.png',
             width: double.infinity,
@@ -37,7 +38,7 @@ class SplashScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const Spacer(),
+                const Spacer(), // NOTE: flexiable space
                 SizedBox(
                   width: 213,
                   child: Text(
