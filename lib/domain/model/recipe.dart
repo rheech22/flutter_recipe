@@ -1,5 +1,7 @@
-import 'package:flutter_recipe/domain/model/ingredient.dart';
 import 'package:flutter_recipe/domain/model/recipe_ingredient.dart';
+import 'package:flutter_recipe/logger.dart';
+
+var logger = Logger();
 
 class Recipe {
   final int id;
@@ -9,7 +11,7 @@ class Recipe {
   final String chef;
   final String time;
   final double rating;
-  final List<Ingredient> ingredients;
+  final List<RecipeIngredient> ingredients;
 
   const Recipe({
     required this.id,
@@ -23,35 +25,51 @@ class Recipe {
   });
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
-    return Recipe(
-      category: json['category'] as String,
-      id: json['id'] as int,
-      name: json['name'] as String,
-      image: json['image'] as String,
-      chef: json['chef'] as String,
-      time: json['time'] as String,
-      rating: json['rating'].toDouble(),
-      ingredients:
-          json['ingredients'].map((e) => RecipeIngredient.fromJson(e)).toList(),
-    );
+    try {
+      return Recipe(
+        category: json['category'],
+        id: json['id'],
+        name: json['name'],
+        image: json['image'],
+        chef: json['chef'],
+        time: json['time'],
+        rating: json['rating'].toDouble(),
+        ingredients: (json['ingredients'] as List<dynamic>)
+            .map((e) => RecipeIngredient.fromJson(e))
+            .toList(),
+      );
+    } catch (e) {
+      logger.log('Error parsing Recipe: $e', 'Recipe.fromJson');
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'category': category,
-      'image': image,
-      'chef': chef,
-      'time': time,
-      'rating': rating,
-      'ingredients':
-          ingredients.map((ingredient) => ingredient.toJson()).toList(),
-    };
+    try {
+      return {
+        'id': id,
+        'name': name,
+        'category': category,
+        'image': image,
+        'chef': chef,
+        'time': time,
+        'rating': rating,
+        'ingredients':
+            ingredients.map((ingredient) => ingredient.toJson()).toList(),
+      };
+    } catch (e) {
+      logger.log('Error converting Recipe to JSON: $e', 'Recipe.toJson');
+      rethrow;
+    }
   }
 
   @override
   String toString() {
-    return 'Recipe(id: $id, name: $name, category: $category,  chef: $chef, time: $time, rating: $rating, ingredients: $ingredients)';
+    try {
+      return 'Recipe(id: $id, name: $name, category: $category,  chef: $chef, time: $time, rating: $rating, ingredients: $ingredients)';
+    } catch (e) {
+      logger.log('Error converting Recipe to String: $e', 'Recipe.toString');
+      rethrow;
+    }
   }
 }

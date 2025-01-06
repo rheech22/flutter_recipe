@@ -1,4 +1,7 @@
 import 'package:flutter_recipe/domain/model/ingredient.dart';
+import 'package:flutter_recipe/logger.dart';
+
+var logger = Logger();
 
 class RecipeIngredient {
   final Ingredient ingredient;
@@ -10,21 +13,45 @@ class RecipeIngredient {
   });
 
   factory RecipeIngredient.fromJson(Map<String, dynamic> json) {
-    return RecipeIngredient(
-      ingredient: Ingredient.fromJson(json['ingredient']),
-      amount: json['amount'],
-    );
+    try {
+      return RecipeIngredient(
+        ingredient: Ingredient.fromJson(json['ingredient']),
+        amount: json['amount'],
+      );
+    } catch (e) {
+      logger.log(
+        'Error parsing RecipeIngredient: $e',
+        'RecipeIngredient.fromJson',
+      );
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'ingredient': ingredient.toJson(),
-      'amount': amount,
-    };
+    try {
+      return {
+        'ingredient': ingredient.toJson(),
+        'amount': amount,
+      };
+    } catch (e) {
+      logger.log(
+        'Error converting RecipeIngredient to JSON: $e',
+        'RecipeIngredient.toJson',
+      );
+      rethrow;
+    }
   }
 
   @override
   String toString() {
-    return 'RecipeIngredient(ingredient: $ingredient, amount: $amount)';
+    try {
+      return 'RecipeIngredient(ingredient: $ingredient, amount: $amount)';
+    } catch (e) {
+      logger.log(
+        'Error converting RecipeIngredient to String: $e',
+        'RecipeIngredient.toString',
+      );
+      rethrow;
+    }
   }
 }

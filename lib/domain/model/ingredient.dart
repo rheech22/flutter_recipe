@@ -1,3 +1,7 @@
+import 'package:flutter_recipe/logger.dart';
+
+var logger = Logger();
+
 class Ingredient {
   final int id;
   final String name;
@@ -10,23 +14,44 @@ class Ingredient {
   });
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
-    return Ingredient(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
-    );
+    try {
+      return Ingredient(
+        id: json['id'],
+        name: json['name'],
+        image: json['image'],
+      );
+    } catch (e) {
+      logger.log('Error parsing Ingredient: $e', 'Ingredient.fromJson');
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'image': image,
-    };
+    try {
+      return {
+        'id': id,
+        'name': name,
+        'image': image,
+      };
+    } catch (e) {
+      logger.log(
+        'Error converting Ingredient to JSON: $e',
+        'Ingredient.toJson',
+      );
+      rethrow;
+    }
   }
 
   @override
   String toString() {
-    return 'Ingredient(id: $id, name: $name)';
+    try {
+      return 'Ingredient(id: $id, name: $name, image: $image)';
+    } catch (e) {
+      logger.log(
+        'Error converting Ingredient to String: $e',
+        'Ingredient.toString',
+      );
+      rethrow;
+    }
   }
 }

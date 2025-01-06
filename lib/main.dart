@@ -46,7 +46,7 @@ class App extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          print('snapshot.data: ${snapshot.data}');
+          // print('snapshot.data: ${snapshot.data}');
           final recipes = snapshot.data ?? [];
 
           return SavedRecipesScreen(recipes: recipes);
