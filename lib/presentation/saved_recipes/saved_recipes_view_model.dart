@@ -24,7 +24,7 @@ class SavedRecipesViewModel extends ChangeNotifier {
 
     _state = state.copyWith(
       recipes: await _getSavedRecipesUseCase.execute(),
-      isLoading: true,
+      isLoading: false,
     );
     notifyListeners();
   }
