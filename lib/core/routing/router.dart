@@ -55,7 +55,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: Routes.home,
-              builder: (context, state) => const HomeScreen(),
+              builder: (context, state) => const HomeScreen(name: 'Aiden'),
             ),
           ],
         ),

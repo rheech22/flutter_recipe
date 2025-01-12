@@ -35,7 +35,7 @@ class NavigatorLayout extends StatelessWidget {
         notchMargin: 10,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         height: 60,
-        color: Colors.transparent,
+        color: Colors.white,
         child: NavigationBar(
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           selectedIndex: currentPageIndex,
@@ -58,7 +58,7 @@ class NavigatorLayout extends StatelessWidget {
               selectedIcon: SvgPicture.asset(
                 'icons/bookmark_selected.svg',
               ),
-              label: 'savedRecipes',
+              label: 'saved recipes',
             ),
             SizedBox.shrink(),
             NavigationDestination(
