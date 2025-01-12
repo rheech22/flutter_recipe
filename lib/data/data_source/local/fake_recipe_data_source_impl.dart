@@ -1,10 +1,9 @@
-import 'package:flutter_recipe/domain/model/recipe.dart';
-import 'package:flutter_recipe/domain/repository/recipe_repository.dart';
+import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
 import 'package:flutter_recipe/logger.dart';
 
 final logger = Logger();
 
-class FakeRecipeRepositoryImpl implements RecipeRepository {
+class FakeRecipeDataSourceImpl implements RecipeDataSource {
   final _mockData = {
     "recipes": [
       {
@@ -310,33 +309,15 @@ class FakeRecipeRepositoryImpl implements RecipeRepository {
   };
 
   @override
-  Future<Recipe?> getRecipe(int id) async {
-    try {
-      await Future.delayed(const Duration(microseconds: 500));
-
-      final recipes = await getRecipes();
-      return recipes.where((r) => r.id == id).firstOrNull;
-    } catch (e) {
-      logger.log(
-        'Error getting recipe: $e',
-        'FakeRecipeRepositoryImpl.getRecipe',
-      );
-      rethrow;
-    }
-  }
-
-  @override
-  Future<List<Recipe>> getRecipes() async {
+  Future<List<Map<String, dynamic>>> getRecipes() async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
 
-      final recipes = _mockData["recipes"]!;
-
-      return recipes.map((r) => Recipe.fromJson(r)).toList();
+      return _mockData["recipes"]!;
     } catch (e) {
       logger.log(
         'Error getting recipes: $e',
-        'FakeRecipeRepositoryImpl.getRecipes',
+        'FakeRecipeDataSourceImpl.getRecipes',
       );
       rethrow;
     }

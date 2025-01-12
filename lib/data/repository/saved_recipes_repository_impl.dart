@@ -1,10 +1,14 @@
-import 'package:flutter_recipe/domain/repository/bookmark_repository.dart';
+import 'package:flutter_recipe/domain/repository/saved_recipes_repository.dart';
 
-class FakeBookmarkRepositoryImpl implements BookmarkRepository {
-  final _ids = <int>{2, 4};
+class SavedRecipesRepositoryImpl implements SavedRecipesRepository {
+  final Set<int> _ids;
+
+  const SavedRecipesRepositoryImpl({
+    ids = const <int>{},
+  }) : _ids = ids;
 
   @override
-  Future<List<int>> getBookmarkedIds() async {
+  Future<List<int>> getSavedRecipeIds() async {
     return _ids.toList();
   }
 

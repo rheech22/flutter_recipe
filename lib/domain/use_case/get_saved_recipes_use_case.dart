@@ -1,5 +1,5 @@
 import 'package:flutter_recipe/domain/model/recipe.dart';
-import 'package:flutter_recipe/domain/repository/bookmark_repository.dart';
+import 'package:flutter_recipe/domain/repository/saved_recipes_repository.dart';
 import 'package:flutter_recipe/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe/logger.dart';
 
@@ -7,17 +7,17 @@ final logger = Logger();
 
 class GetSavedRecipesUseCase {
   final RecipeRepository _recipeRepository;
-  final BookmarkRepository _bookmarkRepository;
+  final SavedRecipesRepository _savedRecipesRepository;
 
   const GetSavedRecipesUseCase({
     required RecipeRepository recipeRepository,
-    required BookmarkRepository bookmarkRepository,
+    required SavedRecipesRepository savedRecipesRepository,
   })  : _recipeRepository = recipeRepository,
-        _bookmarkRepository = bookmarkRepository;
+        _savedRecipesRepository = savedRecipesRepository;
 
   Future<List<Recipe>> execute() async {
     try {
-      final ids = await _bookmarkRepository.getBookmarkedIds();
+      final ids = await _savedRecipesRepository.getSavedRecipeIds();
       final recipes = await _recipeRepository.getRecipes();
 
       return recipes.where((e) => ids.contains(e.id)).toList();

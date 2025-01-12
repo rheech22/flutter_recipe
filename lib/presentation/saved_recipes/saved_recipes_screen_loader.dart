@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe/data/repository/fake_bookmark_repository_impl.dart';
-import 'package:flutter_recipe/data/repository/fake_recipe_repository_impl.dart';
+import 'package:flutter_recipe/data/data_source/local/fake_recipe_data_source_impl.dart';
+import 'package:flutter_recipe/data/repository/saved_recipes_repository_impl.dart';
+import 'package:flutter_recipe/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_screen.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
 
 // NOTE: make an instance as a singleton on top level
 final GetSavedRecipesUseCase _getSavedRecipesUseCase = GetSavedRecipesUseCase(
-  recipeRepository: FakeRecipeRepositoryImpl(),
-  bookmarkRepository: FakeBookmarkRepositoryImpl(),
+  recipeRepository: RecipeRepositoryImpl(
+    recipeDataSource: FakeRecipeDataSourceImpl(),
+  ),
+  savedRecipesRepository: SavedRecipesRepositoryImpl(ids: {2, 4}),
 );
 
 // NOTE: loader는 스크린과 뷰모델을 연결하고 의존성 주입
