@@ -7,6 +7,9 @@ abstract class Routes {
   static const String profile = '/Profile';
   static const String savedRecipes = '/SavedRecipes';
 
+  // nested
+  static const String search = '$home/Search';
+
   // NOTE: Dev Only
   static const String components = '/Components';
 }

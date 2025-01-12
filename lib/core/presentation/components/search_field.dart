@@ -5,11 +5,13 @@ import 'package:flutter_recipe/ui/color_styles.dart';
 class SearchField extends StatelessWidget {
   final String placeHolder;
   final TextEditingController? controller;
+  final dynamic readOnly;
 
   const SearchField({
     super.key,
     required this.placeHolder,
     this.controller,
+    this.readOnly = false,
   });
 
   @override
@@ -17,6 +19,7 @@ class SearchField extends StatelessWidget {
     return SizedBox(
       height: 40,
       child: TextField(
+        readOnly: readOnly,
         controller: controller,
         decoration: InputDecoration(
           prefixIcon: const Icon(

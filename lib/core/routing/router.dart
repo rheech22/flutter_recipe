@@ -5,6 +5,7 @@ import 'package:flutter_recipe/presentation/home/home_screen.dart';
 import 'package:flutter_recipe/presentation/notifications/notifications_screen.dart';
 import 'package:flutter_recipe/presentation/profile/profile_screen.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_screen_loader.dart';
+import 'package:flutter_recipe/presentation/search/search_screen.dart';
 import 'package:flutter_recipe/presentation/signin/signin_screen.dart';
 import 'package:flutter_recipe/presentation/signup/signup_screen.dart';
 import 'package:flutter_recipe/presentation/splash/splash_screen.dart';
@@ -32,6 +33,10 @@ final router = GoRouter(
         onTapSignIn: () => context.go(Routes.signIn),
       ),
     ),
+    GoRoute(
+      path: Routes.search,
+      builder: (context, state) => SearchScreen(),
+    ),
     // NOTE: Dev Only
     GoRoute(
       path: Routes.components,
@@ -55,7 +60,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: Routes.home,
-              builder: (context, state) => const HomeScreen(name: 'Aiden'),
+              builder: (context, state) => HomeScreen(
+                name: 'Aiden',
+                onTapSearch: () => context.go(Routes.search),
+              ),
             ),
           ],
         ),
