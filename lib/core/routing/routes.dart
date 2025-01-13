@@ -10,6 +10,6 @@ abstract class Routes {
   // nested
   static const String search = '$home/Search';
 
-  // NOTE: Dev Only
+  // NOTE: DEV ONLY
   static const String components = '/Components';
 }
