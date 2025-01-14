@@ -25,12 +25,20 @@ class SearchViewModel with ChangeNotifier {
     _state = _state.copyWith(
       recipes: await _searchRecipeUseCase.getRecentSearchRecipes(),
       isLoading: false,
+      isSearchResult: false,
     );
     notifyListeners();
   }
 
   void _searchRecipes(String query) async {
-    _state = _state.copyWith(isLoading: true);
+    if (query.isEmpty) {
+      _loadRecentSearchRecipes();
+      return;
+    }
+
+    _state = _state.copyWith(
+      isLoading: true,
+    );
     notifyListeners();
 
     final recipes = await _searchRecipeUseCase.search(query);
@@ -38,6 +46,7 @@ class SearchViewModel with ChangeNotifier {
     _state = _state.copyWith(
       recipes: recipes,
       isLoading: false,
+      isSearchResult: true,
     );
     notifyListeners();
   }

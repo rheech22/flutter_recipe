@@ -8,5 +8,6 @@ class SearchState with _$SearchState {
   const factory SearchState({
     @Default([]) List<Recipe> recipes,
     @Default(false) bool isLoading,
+    @Default(false) bool isSearchResult,
   }) = _SearchState;
 }
