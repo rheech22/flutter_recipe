@@ -6,12 +6,14 @@ class SearchField extends StatelessWidget {
   final String placeHolder;
   final TextEditingController? controller;
   final dynamic readOnly;
+  final void Function(String)? onChanged;
 
   const SearchField({
     super.key,
     required this.placeHolder,
     this.controller,
     this.readOnly = false,
+    this.onChanged,
   });
 
   @override
@@ -21,6 +23,7 @@ class SearchField extends StatelessWidget {
       child: TextField(
         readOnly: readOnly,
         controller: controller,
+        onChanged: onChanged,
         decoration: InputDecoration(
           prefixIcon: const Icon(
             Icons.search,

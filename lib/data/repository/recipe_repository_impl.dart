@@ -29,9 +29,9 @@ class RecipeRepositoryImpl implements RecipeRepository {
   }
 
   @override
-  Future<List<Recipe>> getRecipes() async {
+  Future<List<Recipe>> getRecipes({String? query}) async {
     try {
-      final recipes = await _recipeDataSource.getRecipes();
+      final recipes = await _recipeDataSource.getRecipes(query: query);
       return recipes.map((r) => Recipe.fromJson(r)).toList();
     } catch (e) {
       logger.log(

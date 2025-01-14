@@ -169,7 +169,7 @@ class FakeRecentSearchRecipeDataSourceImpl implements RecipeDataSource {
   };
 
   @override
-  Future<List<Map<String, dynamic>>> getRecipes() async {
+  Future<List<Map<String, dynamic>>> getRecipes({String? query}) async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
 

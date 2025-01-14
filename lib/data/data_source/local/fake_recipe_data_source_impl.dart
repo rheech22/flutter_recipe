@@ -309,9 +309,17 @@ class FakeRecipeDataSourceImpl implements RecipeDataSource {
   };
 
   @override
-  Future<List<Map<String, dynamic>>> getRecipes() async {
+  Future<List<Map<String, dynamic>>> getRecipes({String? query}) async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
+
+      if (query != null) {
+        return _mockData["recipes"]!.where((recipe) {
+          return (recipe["name"] as String).toLowerCase().contains(
+                query.toLowerCase(),
+              );
+        }).toList();
+      }
 
       return _mockData["recipes"]!;
     } catch (e) {
