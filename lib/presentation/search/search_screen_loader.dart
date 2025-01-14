@@ -7,12 +7,12 @@ import 'package:flutter_recipe/domain/use_case/search_recipes_use_case.dart';
 import 'package:flutter_recipe/presentation/search/search_screen.dart';
 import 'package:flutter_recipe/presentation/search/search_view_model.dart';
 
-final _recentSearchRecipeRepository = RecentSearchRecipeRepositoryImpl(
-  recipeDataSource: FakeRecentSearchRecipeDataSourceImpl(),
-);
 final _searchRecipeUseCase = SearchRecipesUseCase(
   recipeRepository: RecipeRepositoryImpl(
     recipeDataSource: FakeRecipeDataSourceImpl(),
+  ),
+  recentSearchRecipeRepository: RecentSearchRecipeRepositoryImpl(
+    recipeDataSource: FakeRecentSearchRecipeDataSourceImpl(),
   ),
 );
 
@@ -22,7 +22,6 @@ class SearchScreenLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = SearchViewModel(
-      recentSearchRecipeRepository: _recentSearchRecipeRepository,
       searchRecipeUseCase: _searchRecipeUseCase,
     );
 

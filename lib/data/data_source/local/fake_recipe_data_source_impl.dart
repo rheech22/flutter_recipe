@@ -1,4 +1,5 @@
 import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
+import 'package:flutter_recipe/domain/model/recipe.dart';
 import 'package:flutter_recipe/logger.dart';
 
 final logger = Logger();
@@ -329,5 +330,11 @@ class FakeRecipeDataSourceImpl implements RecipeDataSource {
       );
       rethrow;
     }
+  }
+
+  @override
+  Future<void> update({required List<Recipe> recipes}) {
+    // TODO: implement update
+    throw UnimplementedError();
   }
 }

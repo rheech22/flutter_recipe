@@ -16,8 +16,7 @@ class RecentSearchRecipeRepositoryImpl implements RecentSearchRecipeRepository {
   }
 
   @override
-  Future<void> updateRecentSearchRecipes(List<Recipe> recipes) {
-    // TODO: implement updateRecentSearchRecipes
-    throw UnimplementedError();
+  Future<void> updateRecentSearchRecipes(List<Recipe> recipes) async {
+    await _recipeDataSource.update(recipes: recipes);
   }
 }
