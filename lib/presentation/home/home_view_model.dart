@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe/core/domain/error/network_error.dart';
+import 'package:flutter_recipe/core/domain/error/result.dart';
 import 'package:flutter_recipe/domain/use_case/get_dishes_by_category_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/get_recipe_categories_use_case.dart';
 import 'home_state.dart';
@@ -6,6 +10,10 @@ import 'home_state.dart';
 class HomeViewModel with ChangeNotifier {
   final GetCategoriesUseCase _getCategoriesUseCase;
   final GetDishesByCategoryUseCase _getdishesByCategoryUseCase;
+
+  final _errorStreamController = StreamController<NetworkError>.broadcast();
+
+  Stream<NetworkError> get errorStream => _errorStreamController.stream;
 
   HomeViewModel({
     required GetCategoriesUseCase getCategoriesUseCase,
@@ -20,14 +28,28 @@ class HomeViewModel with ChangeNotifier {
   HomeState get state => _state;
 
   void _loadCategories() async {
-    _state = _state.copyWith(
-      categories: await _getCategoriesUseCase.execute(),
-      selectedCategory: 'All',
-    );
-    notifyListeners();
+    final result = await _getCategoriesUseCase.execute();
 
-    await _loadDishesByCategory(state.selectedCategory);
-    notifyListeners();
+    switch (result) {
+      case ResultSuccess<List<String>, NetworkError>():
+        _state = _state.copyWith(
+          categories: result.data,
+          selectedCategory: 'All',
+        );
+        notifyListeners();
+
+        await _loadDishesByCategory(state.selectedCategory);
+        notifyListeners();
+      case ResultError<List<String>, NetworkError>():
+        // NOTE: error handling examples
+        // switch (result.error) {
+        //   case NetworkError.requestTimeout:
+        //   case NetworkError.noInternet:
+        //   case NetworkError.serverError:
+        //   case NetworkError.unknown:
+        // }
+        _errorStreamController.add(result.error);
+    }
   }
 
   Future<void> _loadDishesByCategory(String category) async {
