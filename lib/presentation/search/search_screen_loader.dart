@@ -23,13 +23,10 @@ class SearchScreenLoader extends StatelessWidget {
               context: context,
               isScrollControlled: true,
               builder: (context) => SearchFilterSheet(
-                state: const FilterState(
-                  time: "All",
-                  rate: 1,
-                  category: 'Local Dish',
-                ),
+                state: viewModel.state.filters,
                 onChangeFilter: (FilterState state) {
                   viewModel.onChangeFilter(state);
+                  Navigator.pop(context); // NOTE: Close the bottom sheet
                 },
               ),
             );

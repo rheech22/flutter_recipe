@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe/ui/color_styles.dart';
 import 'package:flutter_svg/svg.dart';
 
+// TODO: 작은 화면에서 UI 벗어나는 현상 수정
 class NavigatorLayout extends StatelessWidget {
   final Widget body;
   final int currentPageIndex;
@@ -47,31 +48,31 @@ class NavigatorLayout extends StatelessWidget {
           indicatorColor: Colors.transparent,
           destinations: [
             NavigationDestination(
-              icon: SvgPicture.asset('icons/home.svg'),
+              icon: SvgPicture.asset('assets/icons/home.svg'),
               selectedIcon: SvgPicture.asset(
-                'icons/home_selected.svg',
+                'assets/icons/home_selected.svg',
               ),
               label: 'home',
             ),
             NavigationDestination(
-              icon: SvgPicture.asset('icons/bookmark.svg'),
+              icon: SvgPicture.asset('assets/icons/bookmark.svg'),
               selectedIcon: SvgPicture.asset(
-                'icons/bookmark_selected.svg',
+                'assets/icons/bookmark_selected.svg',
               ),
               label: 'saved recipes',
             ),
             SizedBox.shrink(),
             NavigationDestination(
-              icon: SvgPicture.asset('icons/notification.svg'),
+              icon: SvgPicture.asset('assets/icons/notification.svg'),
               selectedIcon: SvgPicture.asset(
-                'icons/notification_selected.svg',
+                'assets/icons/notification_selected.svg',
               ),
               label: 'notifications',
             ),
             NavigationDestination(
-              icon: SvgPicture.asset('icons/profile.svg'),
+              icon: SvgPicture.asset('assets/icons/profile.svg'),
               selectedIcon: SvgPicture.asset(
-                'icons/profile_selected.svg',
+                'assets/icons/profile_selected.svg',
               ),
               label: 'profile',
             ),

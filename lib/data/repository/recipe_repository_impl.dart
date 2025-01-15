@@ -2,6 +2,7 @@ import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
 import 'package:flutter_recipe/domain/model/recipe.dart';
 import 'package:flutter_recipe/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe/logger.dart';
+import 'package:flutter_recipe/presentation/search/filter_state.dart';
 
 final logger = Logger();
 
@@ -29,9 +30,10 @@ class RecipeRepositoryImpl implements RecipeRepository {
   }
 
   @override
-  Future<List<Recipe>> getRecipes({String? query}) async {
+  Future<List<Recipe>> getRecipes({String? query, FilterState? filters}) async {
     try {
-      final recipes = await _recipeDataSource.getRecipes(query: query);
+      final recipes =
+          await _recipeDataSource.getRecipes(query: query, filters: filters);
       return recipes.map((r) => Recipe.fromJson(r)).toList();
     } catch (e) {
       logger.log(

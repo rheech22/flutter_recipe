@@ -16,8 +16,8 @@ class BadgeFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 10,
-      runSpacing: 10,
+      spacing: 10, // NOTE: Spacing between columns
+      runSpacing: 10, // NOTE: Spacing between rows
       children: items.expand((item) {
         return [
           GestureDetector(

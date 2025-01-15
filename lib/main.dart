@@ -2,12 +2,13 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_recipe/core/di/di_setup.dart';
 import 'package:flutter_recipe/core/routing/router.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
   diSetup();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: !kReleaseMode,
       tools: const [
         ...DevicePreview.defaultTools,
       ],

@@ -36,6 +36,7 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 31),
+          // NOTE: Horizontal Expanded Box Example
           const SizedBox(
             width: double.infinity,
             child: Text(
@@ -93,8 +94,8 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
           ),
           const SizedBox(height: 30),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
               SizedBox(
                 width: 174,
                 child: Button(
@@ -102,7 +103,6 @@ class _SearchFilterSheetState extends State<SearchFilterSheet> {
                   onPressed: () => widget.onChangeFilter(_state),
                 ),
               ),
-              const Spacer(),
             ],
           ),
           const SizedBox(height: 22),

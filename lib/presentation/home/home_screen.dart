@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: ColorStyles.secondary40,
                   ),
-                  child: Image.asset('images/hero.png'),
+                  child: Image.asset('assets/images/hero.png'),
                 ),
               ],
             ),

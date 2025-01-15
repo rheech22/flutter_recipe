@@ -1,6 +1,7 @@
 import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
 import 'package:flutter_recipe/domain/model/recipe.dart';
 import 'package:flutter_recipe/logger.dart';
+import 'package:flutter_recipe/presentation/search/filter_state.dart';
 
 final logger = Logger();
 
@@ -10,7 +11,10 @@ class FakeRecentSearchRecipeDataSourceImpl implements RecipeDataSource {
   };
 
   @override
-  Future<List<Map<String, dynamic>>> getRecipes({String? query}) async {
+  Future<List<Map<String, dynamic>>> getRecipes({
+    String? query,
+    FilterState? filters,
+  }) async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
 

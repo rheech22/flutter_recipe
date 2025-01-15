@@ -10,7 +10,8 @@ class SearchState with _$SearchState {
     @Default([]) List<Recipe> recipes,
     @Default(false) bool isLoading,
     @Default(false) bool isSearchResult,
-    @Default(FilterState(time: 'All', rate: 1, category: 'Local Dish'))
+    @Default(FilterState(time: 'All', rate: 1, category: 'All'))
     FilterState filters,
+    @Default('') String query,
   }) = _SearchState;
 }

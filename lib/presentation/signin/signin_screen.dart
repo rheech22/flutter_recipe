@@ -85,11 +85,11 @@ class SigninScreen extends StatelessWidget {
                 children: [
                   ElevatedIconButton(
                     onPressed: () {},
-                    icon: SvgPicture.asset('icons/google_icon.svg'),
+                    icon: SvgPicture.asset('assets/icons/google_icon.svg'),
                   ),
                   ElevatedIconButton(
                     onPressed: () {},
-                    icon: SvgPicture.asset('icons/facebook_icon.svg'),
+                    icon: SvgPicture.asset('assets/icons/facebook_icon.svg'),
                   ),
                 ],
               ),

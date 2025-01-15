@@ -31,23 +31,21 @@ class SearchViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void _searchRecipes(String query) async {
-    if (query.isEmpty) {
-      _loadRecentSearchRecipes();
-      return;
-    }
-
+  Future<void> _searchRecipes(String query, FilterState? filters) async {
     _state = _state.copyWith(
       isLoading: true,
     );
     notifyListeners();
 
-    final recipes = await _searchRecipeUseCase.search(query);
+    final recipes = await _searchRecipeUseCase.search(query, state.filters);
+
     await _searchRecipeUseCase.updateRecentSearchRecipes(recipes: recipes);
+
     _state = _state.copyWith(
       recipes: recipes,
       isLoading: false,
       isSearchResult: true,
+      query: query,
     );
     notifyListeners();
   }
@@ -59,14 +57,13 @@ class SearchViewModel with ChangeNotifier {
 
     _debounce = Timer(
       Duration(milliseconds: 500),
-      () => _searchRecipes(query),
+      () async => await _searchRecipes(query, state.filters),
     );
   }
 
-  void onChangeFilter(FilterState filters) {
+  void onChangeFilter(FilterState filters) async {
     _state = _state.copyWith(filters: filters);
+    await _searchRecipes(state.query, filters);
     notifyListeners();
-
-    print(state.toString());
   }
 }

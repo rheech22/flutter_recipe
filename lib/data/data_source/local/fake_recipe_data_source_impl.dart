@@ -1,6 +1,7 @@
 import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
 import 'package:flutter_recipe/domain/model/recipe.dart';
 import 'package:flutter_recipe/logger.dart';
+import 'package:flutter_recipe/presentation/search/filter_state.dart';
 
 final logger = Logger();
 
@@ -310,19 +311,49 @@ class FakeRecipeDataSourceImpl implements RecipeDataSource {
   };
 
   @override
-  Future<List<Map<String, dynamic>>> getRecipes({String? query}) async {
+  Future<List<Map<String, dynamic>>> getRecipes({
+    String? query,
+    FilterState? filters,
+  }) async {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
 
-      if (query != null) {
-        return _mockData["recipes"]!.where((recipe) {
-          return (recipe["name"] as String).toLowerCase().contains(
-                query.toLowerCase(),
-              );
+      dynamic recipes = _mockData["recipes"]!;
+
+      if (query != null && query.isNotEmpty) {
+        recipes = recipes.where((recipe) {
+          return (recipe["name"] as String)
+              .toLowerCase()
+              .contains(query.toLowerCase());
         }).toList();
       }
 
-      return _mockData["recipes"]!;
+      if (filters != null) {
+        recipes = recipes
+            .where(
+              (recipe) {
+                if (filters.time == 'All') {
+                  return true;
+                } else {
+                  return recipe['time'] == filters.time;
+                }
+              },
+            )
+            .where(
+              (recipe) =>
+                  (recipe['rating'] as double) >= filters.rate.toDouble(),
+            )
+            .where((recipe) {
+              if (filters.category == 'All') {
+                return true;
+              } else {
+                return recipe['category'] == filters.category;
+              }
+            })
+            .toList();
+      }
+
+      return recipes.toList();
     } catch (e) {
       logger.log(
         'Error getting recipes: $e',
