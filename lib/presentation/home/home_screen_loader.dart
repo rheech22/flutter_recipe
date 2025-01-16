@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe/core/di/di_setup.dart';
 import 'package:flutter_recipe/core/routing/routes.dart';
+import 'package:flutter_recipe/presentation/home/home_action.dart';
 import 'package:flutter_recipe/presentation/home/home_screen.dart';
 import 'package:flutter_recipe/presentation/home/home_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -52,9 +53,13 @@ class _HomeScreenLoaderState extends State<HomeScreenLoader> {
       builder: (context, widget) {
         return HomeScreen(
           state: viewModel.state,
-          name: 'Aiden',
-          onTapSearch: () => context.push(Routes.search),
-          onSelectCategory: viewModel.onSelectCategory,
+          onAction: (action) {
+            if (action is OnTapSearchField) {
+              context.push(Routes.search);
+              return;
+            }
+            viewModel.onAction(action);
+          },
         );
       },
       listenable: viewModel,

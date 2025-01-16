@@ -9,6 +9,7 @@ import 'package:flutter_recipe/domain/model/recipe.dart';
 import 'package:flutter_recipe/domain/use_case/get_dishes_by_category_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/get_new_recipes_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/get_recipe_categories_use_case.dart';
+import 'package:flutter_recipe/presentation/home/home_action.dart';
 import 'home_state.dart';
 
 class HomeViewModel with ChangeNotifier {
@@ -31,7 +32,7 @@ class HomeViewModel with ChangeNotifier {
     _loadNewRecipes();
   }
 
-  HomeState _state = const HomeState();
+  HomeState _state = const HomeState(name: 'Aiden');
 
   HomeState get state => _state;
 
@@ -77,11 +78,20 @@ class HomeViewModel with ChangeNotifier {
     }
   }
 
-  void onSelectCategory(String category) async {
+  void _onSelectCategory(String category) async {
     _state = state.copyWith(selectedCategory: category);
     notifyListeners();
 
     await _loadDishesByCategory(category);
     notifyListeners();
+  }
+
+  void onAction(HomeAction action) async {
+    switch (action) {
+      case OnTapSearchField():
+        return;
+      case OnSelectCategory():
+        _onSelectCategory(action.category);
+    }
   }
 }
