@@ -5,12 +5,12 @@ import 'package:flutter_recipe/ui/text_styles.dart';
 
 class DishCard extends StatelessWidget {
   final Recipe recipe;
-  final bool isFavorite;
+  final void Function(Recipe recipe) onTapFavorite;
 
   const DishCard({
     super.key,
     required this.recipe,
-    required this.isFavorite,
+    required this.onTapFavorite,
   });
 
   @override
@@ -67,17 +67,20 @@ class DishCard extends StatelessWidget {
           Positioned(
             right: 10,
             bottom: 10,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.bookmark_outline,
-                color: isFavorite ? ColorStyles.primary80 : ColorStyles.gray3,
-                size: 16,
+            child: GestureDetector(
+              onTap: () => onTapFavorite(recipe),
+              child: Container(
+                width: 24,
+                height: 24,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  recipe.isFavorite ? Icons.bookmark : Icons.bookmark_outline,
+                  color: ColorStyles.primary80,
+                  size: 16,
+                ),
               ),
             ),
           ),

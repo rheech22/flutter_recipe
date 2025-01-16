@@ -12,6 +12,7 @@ import 'package:flutter_recipe/domain/use_case/get_new_recipes_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/get_recipe_categories_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/search_recipes_use_case.dart';
+import 'package:flutter_recipe/domain/use_case/toggle_saved_recipes_use_case.dart';
 import 'package:flutter_recipe/presentation/home/home_view_model.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe/presentation/search/search_view_model.dart';
@@ -64,6 +65,7 @@ void diSetup() {
   getIt.registerSingleton<GetDishesByCategoryUseCase>(
     GetDishesByCategoryUseCase(
       recipeRepository: getIt<RecipeRepository>(),
+      savedRecipesRepository: getIt<SavedRecipesRepository>(),
     ),
   );
   getIt.registerSingleton<GetNewRecipesUseCase>(
@@ -72,6 +74,12 @@ void diSetup() {
     ),
   );
 
+  getIt.registerSingleton<ToggleSavedRecipesUseCase>(
+    ToggleSavedRecipesUseCase(
+      recipeRepository: getIt<RecipeRepository>(),
+      savedRecipesRepository: getIt<SavedRecipesRepository>(),
+    ),
+  );
   // View Models
   getIt.registerFactory<SavedRecipesViewModel>(
     () => SavedRecipesViewModel(
@@ -88,6 +96,7 @@ void diSetup() {
       getCategoriesUseCase: getIt<GetCategoriesUseCase>(),
       getdishesByCategoryUseCase: getIt<GetDishesByCategoryUseCase>(),
       getNewRecipesUseCase: getIt<GetNewRecipesUseCase>(),
+      toggleSavedRecipesUseCase: getIt<ToggleSavedRecipesUseCase>(),
     ),
   );
 }

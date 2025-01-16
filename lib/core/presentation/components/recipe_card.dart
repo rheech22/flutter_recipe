@@ -80,8 +80,10 @@ class RecipeCard extends StatelessWidget {
                   child: Container(
                     color: Colors.white,
                     padding: const EdgeInsets.all(3),
-                    child: const Icon(
-                      Icons.bookmark_border_outlined,
+                    child: Icon(
+                      recipe.isFavorite
+                          ? Icons.bookmark
+                          : Icons.bookmark_border_outlined,
                       color: ColorStyles.primary80,
                       size: 16,
                     ),

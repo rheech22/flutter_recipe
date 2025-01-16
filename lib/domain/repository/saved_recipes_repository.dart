@@ -7,5 +7,7 @@ abstract interface class SavedRecipesRepository {
 
   Future<List<int>> getSavedRecipeIds();
 
+  Stream<Set<int>> savedRecipeIdsStream();
+
   Future<void> clear();
 }

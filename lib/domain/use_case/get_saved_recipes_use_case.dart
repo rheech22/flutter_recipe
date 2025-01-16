@@ -20,7 +20,10 @@ class GetSavedRecipesUseCase {
       final ids = await _savedRecipesRepository.getSavedRecipeIds();
       final recipes = await _recipeRepository.getRecipes();
 
-      return recipes.where((e) => ids.contains(e.id)).toList();
+      return recipes
+          .where((e) => ids.contains(e.id))
+          .map((e) => e.copyWith(isFavorite: true))
+          .toList();
     } catch (e) {
       logger.log('Error getting saved recipes: $e', 'GetSavedRecipesUseCase');
       rethrow;

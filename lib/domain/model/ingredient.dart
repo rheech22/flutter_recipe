@@ -1,57 +1,16 @@
-import 'package:flutter_recipe/logger.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-final logger = Logger();
+part 'ingredient.freezed.dart';
 
-class Ingredient {
-  final int id;
-  final String name;
-  final String image;
+part 'ingredient.g.dart';
 
-  Ingredient({
-    required this.id,
-    required this.name,
-    required this.image,
-  });
+@freezed
+class Ingredient with _$Ingredient {
+  const factory Ingredient({
+    required int id,
+    required String name,
+    required String image,
+  }) = _Ingredient;
 
-  factory Ingredient.fromJson(Map<String, dynamic> json) {
-    try {
-      return Ingredient(
-        id: json['id'],
-        name: json['name'],
-        image: json['image'],
-      );
-    } catch (e) {
-      logger.log('Error parsing Ingredient: $e', 'Ingredient.fromJson');
-      rethrow;
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    try {
-      return {
-        'id': id,
-        'name': name,
-        'image': image,
-      };
-    } catch (e) {
-      logger.log(
-        'Error converting Ingredient to JSON: $e',
-        'Ingredient.toJson',
-      );
-      rethrow;
-    }
-  }
-
-  @override
-  String toString() {
-    try {
-      return 'Ingredient(id: $id, name: $name, image: $image)';
-    } catch (e) {
-      logger.log(
-        'Error converting Ingredient to String: $e',
-        'Ingredient.toString',
-      );
-      rethrow;
-    }
-  }
+  factory Ingredient.fromJson(Map<String, Object?> json) => _$IngredientFromJson(json);
 }

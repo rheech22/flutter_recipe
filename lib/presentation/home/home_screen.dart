@@ -122,7 +122,9 @@ class HomeScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 15),
                           child: DishCard(
                             recipe: e,
-                            isFavorite: true,
+                            onTapFavorite: (e) => onAction(
+                              HomeAction.onTapFavorite(e),
+                            ),
                           ),
                         ),
                       )
