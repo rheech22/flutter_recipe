@@ -8,7 +8,6 @@ final logger = Logger();
 class GetSavedRecipesUseCase {
   final RecipeRepository _recipeRepository;
   final SavedRecipesRepository _savedRecipesRepository;
-  bool _init = false;
 
   GetSavedRecipesUseCase({
     required RecipeRepository recipeRepository,
@@ -19,12 +18,6 @@ class GetSavedRecipesUseCase {
   Stream<List<Recipe>> execute() async* {
     try {
       final recipes = await _recipeRepository.getRecipes();
-
-      if (!_init) {
-        _init = true;
-        final recipeIds = await _savedRecipesRepository.getSavedRecipeIds();
-        yield recipes.where((e) => recipeIds.contains(e.id)).toList();
-      }
 
       await for (final ids in _savedRecipesRepository.savedRecipeIdsStream()) {
         yield recipes.where((e) => ids.contains(e.id)).toList();

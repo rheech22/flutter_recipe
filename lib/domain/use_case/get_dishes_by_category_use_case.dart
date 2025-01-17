@@ -12,18 +12,7 @@ class GetDishesByCategoryUseCase {
   })  : _recipeRepository = recipeRepository,
         _savedRecipesRepository = savedRecipesRepository;
 
-  Future<List<Recipe>> getRecipesByCategory(String category) async {
-    final recipes = await _recipeRepository.getRecipes();
-    final ids = await _savedRecipesRepository.getSavedRecipeIds();
-
-    return recipes
-        .where((e) => category == 'All' || e.category == category)
-        .map((e) => e.copyWith(isFavorite: ids.contains(e.id)))
-        .toList();
-  }
-
   Stream<List<Recipe>> execute(String category) async* {
-    print({category});
     final recipes = await _recipeRepository.getRecipes();
 
     await for (final ids in _savedRecipesRepository.savedRecipeIdsStream()) {

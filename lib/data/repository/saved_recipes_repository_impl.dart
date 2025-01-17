@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter_recipe/domain/repository/saved_recipes_repository.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SavedRecipesRepositoryImpl implements SavedRecipesRepository {
   final Set<int> _ids;
-  final _controller = StreamController<Set<int>>.broadcast();
+  final _controller = BehaviorSubject<Set<int>>();
 
   SavedRecipesRepositoryImpl({
     ids = const <int>{},

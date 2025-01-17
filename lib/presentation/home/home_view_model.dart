@@ -52,9 +52,6 @@ class HomeViewModel with ChangeNotifier {
         notifyListeners();
 
         await _loadDishesByCategory('All');
-        _state = _state.copyWith(
-          dishes: await _getDishesByCategoryUseCase.getRecipesByCategory('All'),
-        );
         notifyListeners();
       case ResultError<List<String>, NetworkError>():
         // NOTE: error handling examples
@@ -92,11 +89,6 @@ class HomeViewModel with ChangeNotifier {
 
   void _onSelectCategory(String category) async {
     _state = state.copyWith(selectedCategory: category);
-    notifyListeners();
-
-    _state = _state.copyWith(
-      dishes: await _getDishesByCategoryUseCase.getRecipesByCategory(category),
-    );
     notifyListeners();
 
     await _loadDishesByCategory(category);
