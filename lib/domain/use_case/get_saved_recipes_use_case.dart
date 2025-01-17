@@ -8,22 +8,27 @@ final logger = Logger();
 class GetSavedRecipesUseCase {
   final RecipeRepository _recipeRepository;
   final SavedRecipesRepository _savedRecipesRepository;
+  bool _init = false;
 
-  const GetSavedRecipesUseCase({
+  GetSavedRecipesUseCase({
     required RecipeRepository recipeRepository,
     required SavedRecipesRepository savedRecipesRepository,
   })  : _recipeRepository = recipeRepository,
         _savedRecipesRepository = savedRecipesRepository;
 
-  Future<List<Recipe>> execute() async {
+  Stream<List<Recipe>> execute() async* {
     try {
-      final ids = await _savedRecipesRepository.getSavedRecipeIds();
       final recipes = await _recipeRepository.getRecipes();
 
-      return recipes
-          .where((e) => ids.contains(e.id))
-          .map((e) => e.copyWith(isFavorite: true))
-          .toList();
+      if (!_init) {
+        _init = true;
+        final recipeIds = await _savedRecipesRepository.getSavedRecipeIds();
+        yield recipes.where((e) => recipeIds.contains(e.id)).toList();
+      }
+
+      await for (final ids in _savedRecipesRepository.savedRecipeIdsStream()) {
+        yield recipes.where((e) => ids.contains(e.id)).toList();
+      }
     } catch (e) {
       logger.log('Error getting saved recipes: $e', 'GetSavedRecipesUseCase');
       rethrow;

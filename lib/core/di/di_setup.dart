@@ -80,10 +80,12 @@ void diSetup() {
       savedRecipesRepository: getIt<SavedRecipesRepository>(),
     ),
   );
+
   // View Models
   getIt.registerFactory<SavedRecipesViewModel>(
     () => SavedRecipesViewModel(
       getSavedRecipesUseCase: getIt<GetSavedRecipesUseCase>(),
+      toggleSavedRecipesUseCase: getIt<ToggleSavedRecipesUseCase>(),
     ),
   );
   getIt.registerFactory<SearchViewModel>(

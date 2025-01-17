@@ -5,10 +5,12 @@ import 'package:flutter_recipe/ui/color_styles.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
+  final void Function(Recipe recipe) onTapFavorite;
 
   const RecipeCard({
     super.key,
     required this.recipe,
+    required this.onTapFavorite,
   });
 
   @override
@@ -75,17 +77,18 @@ class RecipeCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                ClipOval(
-                  // NOTE: ClipOval와 IconButton은 각각 어떤 상황에서 사용하는 것이 좋을까?
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(3),
-                    child: Icon(
-                      recipe.isFavorite
-                          ? Icons.bookmark
-                          : Icons.bookmark_border_outlined,
-                      color: ColorStyles.primary80,
-                      size: 16,
+                GestureDetector(
+                  onTap: () => onTapFavorite(recipe),
+                  child: ClipOval(
+                    // NOTE: ClipOval와 IconButton은 각각 어떤 상황에서 사용하는 것이 좋을까?
+                    child: Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.all(3),
+                      child: Icon(
+                        Icons.bookmark,
+                        color: ColorStyles.primary80,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),

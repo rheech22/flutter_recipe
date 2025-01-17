@@ -6,19 +6,31 @@ class GetDishesByCategoryUseCase {
   final RecipeRepository _recipeRepository;
   final SavedRecipesRepository _savedRecipesRepository;
 
-  const GetDishesByCategoryUseCase({
+  GetDishesByCategoryUseCase({
     required RecipeRepository recipeRepository,
     required SavedRecipesRepository savedRecipesRepository,
   })  : _recipeRepository = recipeRepository,
         _savedRecipesRepository = savedRecipesRepository;
 
-  Future<List<Recipe>> execute(String category) async {
+  Future<List<Recipe>> getRecipesByCategory(String category) async {
     final recipes = await _recipeRepository.getRecipes();
-    final savedIds = await _savedRecipesRepository.getSavedRecipeIds();
+    final ids = await _savedRecipesRepository.getSavedRecipeIds();
 
     return recipes
         .where((e) => category == 'All' || e.category == category)
-        .map((e) => e.copyWith(isFavorite: savedIds.contains(e.id)))
+        .map((e) => e.copyWith(isFavorite: ids.contains(e.id)))
         .toList();
+  }
+
+  Stream<List<Recipe>> execute(String category) async* {
+    print({category});
+    final recipes = await _recipeRepository.getRecipes();
+
+    await for (final ids in _savedRecipesRepository.savedRecipeIdsStream()) {
+      yield recipes
+          .where((e) => category == 'All' || e.category == category)
+          .map((e) => e.copyWith(isFavorite: ids.contains(e.id)))
+          .toList();
+    }
   }
 }

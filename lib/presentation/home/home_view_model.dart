@@ -16,13 +16,16 @@ import 'home_state.dart';
 
 class HomeViewModel with ChangeNotifier {
   final GetCategoriesUseCase _getCategoriesUseCase;
-  final GetDishesByCategoryUseCase _getdishesByCategoryUseCase;
+  final GetDishesByCategoryUseCase _getDishesByCategoryUseCase;
   final GetNewRecipesUseCase _getNewRecipesUseCase;
   final ToggleSavedRecipesUseCase _toggleSavedRecipesUseCase;
 
   final _errorStreamController = StreamController<BaseError>.broadcast();
-
   Stream<BaseError> get errorStream => _errorStreamController.stream;
+
+  HomeState _state = const HomeState(name: 'Aiden');
+  HomeState get state => _state;
+  StreamSubscription? _dishesSubscription;
 
   HomeViewModel({
     required GetCategoriesUseCase getCategoriesUseCase,
@@ -30,16 +33,12 @@ class HomeViewModel with ChangeNotifier {
     required GetNewRecipesUseCase getNewRecipesUseCase,
     required ToggleSavedRecipesUseCase toggleSavedRecipesUseCase,
   })  : _getCategoriesUseCase = getCategoriesUseCase,
-        _getdishesByCategoryUseCase = getdishesByCategoryUseCase,
+        _getDishesByCategoryUseCase = getdishesByCategoryUseCase,
         _getNewRecipesUseCase = getNewRecipesUseCase,
         _toggleSavedRecipesUseCase = toggleSavedRecipesUseCase {
     _loadCategories();
     _loadNewRecipes();
   }
-
-  HomeState _state = const HomeState(name: 'Aiden');
-
-  HomeState get state => _state;
 
   void _loadCategories() async {
     final result = await _getCategoriesUseCase.execute();
@@ -52,7 +51,10 @@ class HomeViewModel with ChangeNotifier {
         );
         notifyListeners();
 
-        await _loadDishesByCategory(state.selectedCategory);
+        await _loadDishesByCategory('All');
+        _state = _state.copyWith(
+          dishes: await _getDishesByCategoryUseCase.getRecipesByCategory('All'),
+        );
         notifyListeners();
       case ResultError<List<String>, NetworkError>():
         // NOTE: error handling examples
@@ -67,8 +69,13 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> _loadDishesByCategory(String category) async {
-    final dishes = await _getdishesByCategoryUseCase.execute(category);
-    _state = _state.copyWith(dishes: dishes);
+    _dishesSubscription = _getDishesByCategoryUseCase.execute(category).listen(
+      (dishes) {
+        // print(dishes);
+        _state = _state.copyWith(dishes: dishes);
+        notifyListeners();
+      },
+    );
   }
 
   Future<void> _loadNewRecipes() async {
@@ -87,15 +94,27 @@ class HomeViewModel with ChangeNotifier {
     _state = state.copyWith(selectedCategory: category);
     notifyListeners();
 
-    await _loadDishesByCategory(category);
+    _state = _state.copyWith(
+      dishes: await _getDishesByCategoryUseCase.getRecipesByCategory(category),
+    );
     notifyListeners();
+
+    await _loadDishesByCategory(category);
   }
 
   void _onTapFavorite(Recipe recipe) async {
     final result = await _toggleSavedRecipesUseCase.execute(recipe.id);
     switch (result) {
       case ResultSuccess<List<Recipe>, SaveRecipeError>():
-        _state = _state.copyWith(dishes: result.data);
+        _state = _state.copyWith(
+          dishes: result.data
+              .where(
+                (e) =>
+                    _state.selectedCategory == 'All' ||
+                    e.category == _state.selectedCategory,
+              )
+              .toList(),
+        );
         notifyListeners();
       case ResultError<List<Recipe>, SaveRecipeError>():
         _errorStreamController.add(result.error);
@@ -111,5 +130,11 @@ class HomeViewModel with ChangeNotifier {
       case OnTapFavorite():
         _onTapFavorite(action.recipe);
     }
+  }
+
+  @override
+  void dispose() {
+    _dishesSubscription?.cancel();
+    super.dispose();
   }
 }
