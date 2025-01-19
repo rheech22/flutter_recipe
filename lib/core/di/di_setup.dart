@@ -1,3 +1,4 @@
+import 'package:flutter_recipe/data/clipboard/clipboard_service_impl.dart';
 import 'package:flutter_recipe/data/data_source/local/fake_recent_search_recipe_data_source_impl.dart';
 import 'package:flutter_recipe/data/data_source/local/fake_recipe_data_source_impl.dart';
 import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_recipe/data/repository/fake_procedure_repository_impl.da
 import 'package:flutter_recipe/data/repository/recent_search_recipe_repository_impl.dart';
 import 'package:flutter_recipe/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe/data/repository/saved_recipes_repository_impl.dart';
+import 'package:flutter_recipe/domain/clipboard/clipboard_service.dart';
 import 'package:flutter_recipe/domain/repository/ingredient_repository.dart';
 import 'package:flutter_recipe/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe/domain/repository/recent_search_recipe_repository.dart';
@@ -53,6 +55,9 @@ void diSetup() {
   );
   getIt.registerSingleton<ProcedureRepository>(
     FakeProcedureRepositoryImpl(),
+  );
+  getIt.registerSingleton<ClipboardService>(
+    ClipboardServiceImpl(),
   );
 
   // Use Cases
@@ -117,6 +122,7 @@ void diSetup() {
       ingredientRepository: getIt<IngredientRepository>(),
       procedureRepository: getIt<ProcedureRepository>(),
       getDishesByCategoryUseCase: getIt<GetDishesByCategoryUseCase>(),
+      clipboardService: getIt<ClipboardService>(),
     ),
   );
 }

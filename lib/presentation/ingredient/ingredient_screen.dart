@@ -9,20 +9,67 @@ import 'package:flutter_recipe/presentation/ingredient/ingredient_state.dart';
 import 'package:flutter_recipe/ui/color_styles.dart';
 import 'package:flutter_recipe/ui/text_styles.dart';
 
+enum IngredientMenu {
+  share,
+  rate,
+  review,
+  unsave,
+}
+
 class IngredientScreen extends StatelessWidget {
   final IngredientState state;
   final void Function(IngredientAction action) onAction;
+  final void Function(IngredientMenu menu) onTapMenu;
 
   const IngredientScreen({
     super.key,
     required this.state,
     required this.onAction,
+    required this.onTapMenu,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton(
+            icon: const Icon(Icons.more_horiz),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: () => onTapMenu(IngredientMenu.share),
+                  child: PopupMenuItemContent(
+                    text: 'Share',
+                    icon: Icons.share,
+                  ),
+                ),
+                PopupMenuItem(
+                  onTap: () => onTapMenu(IngredientMenu.rate),
+                  child: PopupMenuItemContent(
+                    text: 'Rate Recipe',
+                    icon: Icons.star,
+                  ),
+                ),
+                PopupMenuItem(
+                  onTap: () => onTapMenu(IngredientMenu.review),
+                  child: PopupMenuItemContent(
+                    text: 'Review',
+                    icon: Icons.comment,
+                  ),
+                ),
+                PopupMenuItem(
+                  onTap: () => onTapMenu(IngredientMenu.unsave),
+                  child: PopupMenuItemContent(
+                    text: 'Unsave',
+                    icon: Icons.bookmark,
+                  ),
+                ),
+              ];
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -61,6 +108,31 @@ class IngredientScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PopupMenuItemContent extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const PopupMenuItemContent({
+    super.key,
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 20,
+        ),
+        SizedBox(width: 16),
+        Text(text, style: TextStyles.smallTextRegular),
+      ],
     );
   }
 }
@@ -135,7 +207,7 @@ class IngredientList extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             Text(
-              '1 Serve',
+              '1 serve',
               style: TextStyles.smallerTextRegular.copyWith(
                 color: ColorStyles.gray3,
               ),
