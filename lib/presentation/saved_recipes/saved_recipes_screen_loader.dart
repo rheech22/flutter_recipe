@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe/core/di/di_setup.dart';
+import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_action.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_screen.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
+import 'package:go_router/go_router.dart';
 
 class SavedRecipesScreenLoader extends StatelessWidget {
   const SavedRecipesScreenLoader({super.key});
@@ -21,6 +23,11 @@ class SavedRecipesScreenLoader extends StatelessWidget {
         return SavedRecipesScreen(
           recipes: state.recipes,
           onAction: (action) {
+            if (action is OnTapRecipe) {
+              // NOTE: naviagte example
+              context.push('/Home/Ingredient/${action.recipe.id}');
+              return;
+            }
             viewModel.onAction(action);
           },
         );

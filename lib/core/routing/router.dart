@@ -2,6 +2,7 @@ import 'package:flutter_recipe/core/routing/navigator_layout.dart';
 import 'package:flutter_recipe/core/routing/routes.dart';
 import 'package:flutter_recipe/presentation/dev_only/components_screen.dart';
 import 'package:flutter_recipe/presentation/home/home_screen_loader.dart';
+import 'package:flutter_recipe/presentation/ingredient/ingredient_loader.dart';
 import 'package:flutter_recipe/presentation/notifications/notifications_screen.dart';
 import 'package:flutter_recipe/presentation/profile/profile_screen.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_screen_loader.dart';
@@ -14,6 +15,13 @@ import 'package:go_router/go_router.dart';
 final router = GoRouter(
   initialLocation: Routes.splash,
   routes: [
+    GoRoute(
+      path: Routes.ingredient,
+      builder: (context, state) {
+        final recipeId = int.parse(state.pathParameters['recipeId']!);
+        return IngredientLoader(recipeId: recipeId);
+      },
+    ),
     GoRoute(
       path: Routes.splash,
       builder: (context, state) => SplashScreen(

@@ -1,9 +1,13 @@
 import 'package:flutter_recipe/data/data_source/local/fake_recent_search_recipe_data_source_impl.dart';
 import 'package:flutter_recipe/data/data_source/local/fake_recipe_data_source_impl.dart';
 import 'package:flutter_recipe/data/data_source/models/recipe_data_source.dart';
+import 'package:flutter_recipe/data/repository/fake_ingredient_repository_impl.dart';
+import 'package:flutter_recipe/data/repository/fake_procedure_repository_impl.dart';
 import 'package:flutter_recipe/data/repository/recent_search_recipe_repository_impl.dart';
 import 'package:flutter_recipe/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe/data/repository/saved_recipes_repository_impl.dart';
+import 'package:flutter_recipe/domain/repository/ingredient_repository.dart';
+import 'package:flutter_recipe/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe/domain/repository/recent_search_recipe_repository.dart';
 import 'package:flutter_recipe/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe/domain/repository/saved_recipes_repository.dart';
@@ -14,6 +18,7 @@ import 'package:flutter_recipe/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/search_recipes_use_case.dart';
 import 'package:flutter_recipe/domain/use_case/toggle_saved_recipes_use_case.dart';
 import 'package:flutter_recipe/presentation/home/home_view_model.dart';
+import 'package:flutter_recipe/presentation/ingredient/ingredient_view_model.dart';
 import 'package:flutter_recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe/presentation/search/search_view_model.dart';
 import 'package:get_it/get_it.dart';
@@ -42,6 +47,12 @@ void diSetup() {
     SavedRecipesRepositoryImpl(
       ids: {2, 3},
     ),
+  );
+  getIt.registerSingleton<IngredientRepository>(
+    FakeIngredientRepositoryImpl(),
+  );
+  getIt.registerSingleton<ProcedureRepository>(
+    FakeProcedureRepositoryImpl(),
   );
 
   // Use Cases
@@ -99,6 +110,13 @@ void diSetup() {
       getdishesByCategoryUseCase: getIt<GetDishesByCategoryUseCase>(),
       getNewRecipesUseCase: getIt<GetNewRecipesUseCase>(),
       toggleSavedRecipesUseCase: getIt<ToggleSavedRecipesUseCase>(),
+    ),
+  );
+  getIt.registerFactory<IngredientViewModel>(
+    () => IngredientViewModel(
+      ingredientRepository: getIt<IngredientRepository>(),
+      procedureRepository: getIt<ProcedureRepository>(),
+      getDishesByCategoryUseCase: getIt<GetDishesByCategoryUseCase>(),
     ),
   );
 }

@@ -9,6 +9,7 @@ abstract class Routes {
 
   // nested
   static const String search = '$home/Search';
+  static const String ingredient = '$home/Ingredient/:recipeId';
 
   // NOTE: DEV ONLY
   static const String components = '/Components';
